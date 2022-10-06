@@ -1,6 +1,6 @@
 {
   "name": "symbol-render",
-  "main": "index.js",
+  "main": "index.ts",
   "dependencies": {
     "pixi-projection": "^0.4.4",
     "pixi.js": "^6.3.2"
