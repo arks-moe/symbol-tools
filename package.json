@@ -1,9 +1,9 @@
 {
   "name": "symbol-render",
-  "type": "module",
+  "main": "index.js",
   "dependencies": {
     "pixi-projection": "^0.4.4",
-    "pixi.js": "^6.5.5"
+    "pixi.js": "^6.3.2"
   },
   "devDependencies": {
     "typescript": ">=3.0.0"
