@@ -30,6 +30,9 @@ type Layer = {
   };
 };
 
+/**
+ * Symbol Art parsed as JSON object.
+ */
 export type SymbolArt = {
   name: string;
   authorId: number;
