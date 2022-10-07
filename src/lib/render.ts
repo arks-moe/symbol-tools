@@ -1,15 +1,16 @@
-import * as PIXI from "pixi.js";
-import { Sprite2d } from "pixi-projection";
-import convertRGBtoHex from "./rgb-to-hex";
+import * as PIXI from 'pixi.js';
+import { Sprite2d } from 'pixi-projection';
+import convertRGBtoHex from './rgb-to-hex';
+import { SymbolArt } from '../types';
 
 /**
  * Render out SymbolArt to DataURL PNG.
  * @param {import("../types").SymbolArt} sar
  * @returns {Promise<string>} DataURL render in PNG Format of Symbol Art
  */
-export default function renderSar(sar) {
-  if (!document) throw Error("document has to be accessible.");
-  const promise = new Promise((resolve) => {
+export default function renderSar(sar: SymbolArt): Promise<string> {
+  if (!document) throw Error('document has to be accessible.');
+  return new Promise(resolve => {
     PIXI.utils.destroyTextureCache();
     const app = new PIXI.Application({
       width: 760,
@@ -18,12 +19,12 @@ export default function renderSar(sar) {
       preserveDrawingBuffer: true,
       autoDensity: true,
       backgroundAlpha: 0,
-      clearBeforeRender: true,
+      clearBeforeRender: true
     });
 
     const resolution = 4;
 
-    app.loader.add("spritesheet", "../spritesheet.json").load(() => {
+    app.loader.add('spritesheet', '../spritesheet.json').load(() => {
       const container = new PIXI.Container();
       app.stage.addChild(container);
 
@@ -40,20 +41,20 @@ export default function renderSar(sar) {
         const corners = [
           {
             x: layer.points.topLeft.x * resolution + offsetX,
-            y: layer.points.topLeft.y * resolution + offsetY,
+            y: layer.points.topLeft.y * resolution + offsetY
           },
           {
             x: layer.points.topRight.x * resolution + offsetX,
-            y: layer.points.topRight.y * resolution + offsetY,
+            y: layer.points.topRight.y * resolution + offsetY
           },
           {
             x: layer.points.bottomRight.x * resolution + offsetX,
-            y: layer.points.bottomRight.y * resolution + offsetY,
+            y: layer.points.bottomRight.y * resolution + offsetY
           },
           {
             x: layer.points.bottomLeft.x * resolution + offsetX,
-            y: layer.points.bottomLeft.y * resolution + offsetY,
-          },
+            y: layer.points.bottomLeft.y * resolution + offsetY
+          }
         ];
         const { props } = layer;
         const { colorR, colorG, colorB, transparency, visible } = props;
@@ -75,12 +76,10 @@ export default function renderSar(sar) {
 
         container.addChild(sprite);
       }
-      app.renderer.addListener("postrender", () => {
+      app.renderer.addListener('postrender', () => {
         resolve(app.view.toDataURL());
         app.destroy();
       });
     });
   });
-
-  return promise;
 }

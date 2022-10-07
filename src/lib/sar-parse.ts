@@ -2,13 +2,14 @@ import { BlowfishContext } from './parser/blowfish';
 import { sarSchema } from './parser/sarstruct';
 import struct from './parser/struct';
 import prs from './parser/prs';
+import { SymbolArt } from '../types';
 
 /**
  * Process raw `.sar` files
  * @param {ArrayBuffer} buffer
  * @returns {import('../src/types').SymbolArt} Processed .sar as an Object.
  */
-export default function processSarBuffer(buffer) {
+export default function processSarBuffer(buffer: ArrayBuffer): SymbolArt {
   let u8view = new Uint8Array(buffer);
   const flag = u8view[3];
   if (u8view[0] !== 115 || u8view[1] !== 97 || u8view[2] !== 114) {
